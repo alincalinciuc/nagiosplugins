@@ -1,0 +1,17 @@
+#!/bin/bash
+numberofkvm=`virsh list --inactive | grep -c "instance"`
+numberofdocker=`docker ps -a | grep -c "Exited "`
+numberofinstances=$(($numberofkvm + $numberofdocker))
+if [ "$numberofinstances" > "6" ]; then
+        echo $numberofinstances
+        exit 2;
+else
+        if [ "$numberofinstances" > 2 ]; then
+                echo $numberofinstances
+                exit 1;
+        else
+                echo $numberofinstances
+                exit 0;
+        fi
+fi
+
